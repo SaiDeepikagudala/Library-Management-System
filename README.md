@@ -15,7 +15,7 @@ A simple Library Management System built using Python and Flask. This system all
 - Python
 - Flask
 - HTML/CSS
-- JavaScript (optional)
+- JavaScript 
 - Tabulate (for displaying logs in a formatted table)
 
 ## Prerequisites
