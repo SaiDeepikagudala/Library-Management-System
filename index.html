@@ -1,0 +1,120 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <script src="static/js/script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 id="heading">Welcome to the Library Management System</h1>
+
+        <p>Available Books:</p>
+        <ul>
+            {% for book, count in books.items() %}
+                <li>{{ book }}: {{ count }} copies</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Actions</h2>
+        <form action="/borrow" method="post">
+            <input type="text" name="book_name" placeholder="Enter book name" required>
+            <input type="text" name="user_name" placeholder="Enter your name" required>
+            <button type="submit">Borrow Book</button>
+        </form>
+
+        <form action="/return" method="post">
+            <input type="text" name="book_name" placeholder="Enter book name" required>
+            <input type="text" name="user_name" placeholder="Enter your name" required>
+            <button type="submit">Return Book</button>
+        </form>
+
+        <form action="/donate" method="post">
+            <input type="text" name="book_name" placeholder="Enter book name" required>
+            <button type="submit">Donate Book</button>
+        </form>
+    </div>
+
+   
+</body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <script src="static/js/script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Library Management System</h1>
+
+        <!-- Display Flash Messages -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Display Available Books -->
+        <h2>Available Books</h2>
+        <ul>
+            {% for book, count in books.items() %}
+                <li>{{ book }}: {{ count }} copies</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Actions</h2>
+
+        <!-- Borrow Book Form -->
+        <form action="{{ url_for('borrow') }}" method="post">
+            <input type="text" name="name" placeholder="Enter your name" required>
+            <input type="text" name="bookname" placeholder="Enter book name" required>
+            <button type="submit">Borrow Book</button>
+        </form>
+
+        <!-- Return Book Form -->
+        <form action="{{ url_for('return_book') }}" method="post">
+            <input type="text" name="name" placeholder="Enter your name" required>
+            <input type="text" name="bookname" placeholder="Enter book name" required>
+            <button type="submit">Return Book</button>
+        </form>
+
+        <!-- Donate Book Form -->
+        <form action="{{ url_for('donate') }}" method="post">
+            <input type="text" name="bookname" placeholder="Enter book name" required>
+            <button type="submit">Donate Book</button>
+        </form>
+
+        <!-- Display Borrow/Return Log -->
+        <h2>Borrow/Return Log</h2>
+        {% if log %}
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Book</th>
+                    <th>Status</th>
+                </tr>
+                {% for record in log %}
+                    <tr>
+                        <td>{{ record["Name"] }}</td>
+                        <td>{{ record["Book"] }}</td>
+                        <td>{{ record["Status"] }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No transactions recorded yet.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
